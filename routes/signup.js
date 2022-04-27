@@ -71,7 +71,7 @@ route.post('/', async (req, res)=>{
  if(error) return res.status(400).send(error.details[0].message);
   //checking if the email is already exist in database
   const emailExist=await Signup.findOne({email:req.body.email})
-  if(emailExist) return res.status(400).send('email already registered')
+  if(emailExist) return res.status(409).json({message:'email already registered', status:'error'})
   //Hashing password
   const salt= await bcrypt.genSalt(10)
   const hashedPassword=await bcrypt.hash(req.body.password,salt)

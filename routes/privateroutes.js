@@ -4,7 +4,7 @@ const { sign, verify } = jwt;
 
 module.exports=async function(req,res,next){
     const token=req.header('auth-token')
-    if(!token) return res.status(400).send('access denied')
+    if(!token) return res.status(403).json({message:'access denied', status:'error'})
     
     console.log("sdfd",token, process.env.SECRET)
     try{
@@ -15,7 +15,7 @@ module.exports=async function(req,res,next){
 }
 catch (err){
     console.log(err)
- res.status(400).send('invalid token')
+ res.status(401).json({message:'invalid token ', status:'error'})
 }
 }
 

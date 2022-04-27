@@ -65,10 +65,10 @@ route.post('/', async (req, res)=>{
     //checking if the email is already exist in database
     const user=await Signup.findOne({email: req.body.email})
     console.log(req.body.email, user);
-    if(!user) return res.status(400).send('email not found');
+    if(!user) return res.status(400).json({message:'email not found', status:'error'});
     //checking if password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password)
-    if(!validPassword) return res.status(400).send('invalid password');
+    if(!validPassword) return res.status(400).json({message:'invalid password', status:'error'});
     // create and asign web token(jwt)
     const token= jwt.sign({_id: user._id},process.env.SECRET);
      let login =new Signup({
