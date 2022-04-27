@@ -12,9 +12,13 @@ const options={
             version:"1.0.0",
             description:" my personal portfolio api access it by clicking on this link https://github.com/munyanezaarmel/my-brand-api.git"
         },
-        servers:[{
-             url:"http://localhost:3000/"
-        }],
+        server: [{
+            url:`${
+              process.env.NODE_ENV === 'development'
+                ? 'http://localhost:3000'
+                : 'https://mi-brand.herokuapp.com/api-docs/#/'
+            }`
+          }]
     },
     apis:["./routes/*.js"]
 }
@@ -54,6 +58,10 @@ app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(specs))
 //connecting to database
 app.use(cors())
 app.use(morgan('dev'))
+app.use(cors());
+app.options('*', cors());
+app.enable('trust proxy');
+
 mongoose.connect(
     process.env.DATABASE_COLLECTION,{ useNewUrlParser: true },()=>
     console.log('connected to database')
