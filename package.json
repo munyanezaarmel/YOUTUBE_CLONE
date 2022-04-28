@@ -6,9 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "start-dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env NODE_ENV=test mocha --exit",
+    "test": "cross-env NODE_ENV=test mocha --timeout 10000  --exit",
     "coverage": "nyc --reporter=html npm run test"
-  
   },
   "keywords": [],
   "author": "",
@@ -21,10 +20,12 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
+    "mockgoose": "^8.0.4",
     "mongoose": "^6.2.10",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
     "nyc": "^15.1.0",
+    "supertest": "^6.2.3",
     "swagger-jsdoc": "^6.2.0",
     "swagger-ui": "^4.10.3",
     "swagger-ui-express": "^4.3.0",

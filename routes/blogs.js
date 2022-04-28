@@ -105,7 +105,7 @@ router.post('/', verify ,async(req, res)=>{
     })
     try{
         const savedBlogs= await blog.save()
-        res.json(savedBlogs)
+        res.status(201).json(savedBlogs)
     }
     catch(err){
         res.json({message:err})
@@ -171,7 +171,7 @@ router.get('/:blogId',async(req, res) => {
 router.delete('/:blogId',verify,async(req, res)=>{
     try{
    const removed=  await Blogs.remove({_id:req.params.blogId})
-   res.json(removed)
+   res.status(200).json({message:'the blog was successfully deleted',removed})
     }
     catch (err) {
         res.json({message:err});
@@ -218,7 +218,7 @@ router.put('/:blogId',verify,async(req, res)=>{
     {_id:req.params.blogId},{$set:{title:req.body.title}}
     )
   
-    res.json(updated)
+    res.status(201).json({message:'the blog was updated successfully',updated})
     }
     catch (err) {
         res.json({message:err});

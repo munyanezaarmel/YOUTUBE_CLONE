@@ -68,7 +68,7 @@ route.post('/', async (req, res)=>{
     if(!user) return res.status(400).json({message:'email not found', status:'error'});
     //checking if password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password)
-    if(!validPassword) return res.status(400).json({message:'invalid password', status:'error'});
+    if(!validPassword) return res.status(401).json({message:'invalid password', status:'error'});
     // create and asign web token(jwt)
     const token= jwt.sign({_id: user._id},process.env.SECRET);
      let login =new Signup({
@@ -77,7 +77,7 @@ route.post('/', async (req, res)=>{
      })
      try{
   const savedLogin= await login.save()
-  res.header('auth-token',token).json(savedLogin)
+  res.header('auth-token',token).status(200).json(savedLogin)
      }
      catch(err){
    res.status(400).json({message:err})
