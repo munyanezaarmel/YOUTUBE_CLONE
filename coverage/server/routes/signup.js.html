@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.38% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/21</span>
+                <span class='fraction'>20/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.63% </span>
+                <span class="strong">95% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/19</span>
+                <span class='fraction'>19/20</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -154,7 +154,9 @@
 <a name='L89'></a><a href='#L89'>89</a>
 <a name='L90'></a><a href='#L90'>90</a>
 <a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -223,22 +225,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -315,23 +319,25 @@ const {registerValidation}=require('./passport')
 route.post('/', async (req, res)=&gt;{
   //lets validate a user before submitting
   const{error}=registerValidation(req.body);
- <span class="missing-if-branch" title="else path not taken" >E</span>if(error) return res.status(400).send(error.details[0].message);
+ if(error) return res.status(400).send(error.details[0].message);
   //checking if the email is already exist in database
-  const emailExist=<span class="cstat-no" title="statement not covered" >await Signup.findOne({email:req.body.email})</span>
-<span class="cstat-no" title="statement not covered" >  if(emailExist) <span class="cstat-no" title="statement not covered" >return res.status(409).json({message:'email already registered', status:'error'})</span></span>
+  const emailExist=await Signup.findOne({email:req.body.email})
+  <span class="missing-if-branch" title="if path not taken" >I</span>if(emailExist) <span class="cstat-no" title="statement not covered" >return res.status(409).json({message:'email already registered', status:'error'})</span>
   //Hashing password
-  const salt= <span class="cstat-no" title="statement not covered" >await bcrypt.genSalt(10)</span>
-  const hashedPassword=<span class="cstat-no" title="statement not covered" >await bcrypt.hash(req.body.password,salt)</span>
-  const signup=<span class="cstat-no" title="statement not covered" >new Signup({</span>
+  const salt= await bcrypt.genSalt(10)
+  const hashedPassword=await bcrypt.hash(req.body.password,salt)
+  const signup=new Signup({
    username: req.body.username,
      email:req.body.email,
       password: hashedPassword
   })
-<span class="cstat-no" title="statement not covered" >  try{</span>
-  let savedUser=<span class="cstat-no" title="statement not covered" >await signup.save()</span>
-<span class="cstat-no" title="statement not covered" > res.status(200).json({user:signup._id,message:'user created'})</span>
+  try{
+  let savedUser=await signup.save()
+  console.log('ok')
+ res.status(200).json({user:signup._id,message:'user created'})
   }
   catch(err){
+   
 <span class="cstat-no" title="statement not covered" > res.json({message:err})</span>
   }
 })
@@ -343,7 +349,7 @@ module.exports=route;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri Apr 29 2022 10:09:07 GMT+0200 (South Africa Standard Time)
+                at Fri Apr 29 2022 16:52:25 GMT+0200 (South Africa Standard Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

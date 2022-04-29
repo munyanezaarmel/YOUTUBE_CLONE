@@ -64,7 +64,7 @@ route.post('/', async (req, res)=>{
    if(error) return res.status(400).send(error.details[0].message);
     //checking if the email is already exist in database
     const user=await Signup.findOne({email: req.body.email})
-    console.log(req.body.email, user);
+    
     if(!user) return res.status(400).json({message:'email not found', status:'error'});
     //checking if password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password)
@@ -77,7 +77,8 @@ route.post('/', async (req, res)=>{
      })
      try{
   const savedLogin= await login.save()
-  res.header('auth-token',token).status(200).json(savedLogin)
+  console.log('login')
+  res.header('auth-token',token).status(200).json({savedLogin,token})
      }
      catch(err){
    res.status(400).json({message:err})
