@@ -55,7 +55,7 @@ let routerContact=express.Router()
 routerContact.get('/', async (req, res)=>{
     try{
         const getContact = await contact.find({})
-        res.json(getContact)
+        res.status(201).json({message:"all messages",getContact})
     }
     catch(err){
         res.json({message: err})
@@ -104,7 +104,7 @@ routerContact.post('/', async(req, res)=>{
     })
     try{
         const savedContact = await messageContact.save()
-        res.json(savedContact)
+        res.json({message:"message sent",savedContact})
     }
     catch(err){
         res.json({message:err})

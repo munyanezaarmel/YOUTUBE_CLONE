@@ -57,7 +57,7 @@ let router=express.Router()
 router.get('/', async (req, res)=>{
      try{
          const getAllBlogs= await Blogs.find({})
-         res.status(200).json(getAllBlogs)
+         res.status(200).json({message:'blogs',getAllBlogs})
      }
      catch(err){
          res.json({message: err})

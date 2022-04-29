@@ -114,7 +114,7 @@ routerProfile.put('/:userId',async(req, res)=>{
    const updated=await Profiles.updateOne(
     {_id:req.params.userId},{$set:{email:req.body.email}}
     )
-    res.json(updated)
+    res.status(201).json({message:"user updated sucessfully",updated})
     }
     catch (err) {
         res.json({message:err});
