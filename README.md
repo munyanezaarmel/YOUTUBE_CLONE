@@ -8,3 +8,5 @@
  
  
 view deployment on heroku by clicking here https://mi-brand.herokuapp.com/api-docs/
+
+Email me:munyaarmel61@gmail.com
