@@ -5,7 +5,7 @@
   const server = require('../server');
   chai.use(chaiHttp);
 describe('User workflow tests', () => {
-  it('should register + login a user, create product and verify 1 in DB', function(done){
+  it.skip('should register + login a user, create product and verify 1 in DB', function(done){
     this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -67,7 +67,7 @@ chai.request(server)
   });
 });
 });
-  it('check blog DB', function(done){
+  it.skip('check blog DB', function(done){
     this.timeout(30000);
 // 1) Register new user
 let user = {
