@@ -29,7 +29,9 @@ const mongoose=require('mongoose')
 require('dotenv').config()
 const bodyParser= require('body-parser')
 app.use(bodyParser.json())
-//importing routes of blogsgh
+//importing routes of homepage 
+let routehome=require('./routes/home')
+//importing routes of blogs
 let routeblog=require('./routes/blogs')
 //importing routes of contact
 let routeContact=require('./routes/contact')
@@ -41,9 +43,11 @@ let routeLikes=require('./routes/likes')
 let routeSignup=require('./routes/signup')
 //importing routes for login
 let routeLogin=require('./routes/login')
-//middleware for sign up 
+//middleware for home page
+app.use('/',routehome)
 //middleware for login 
 app.use('/api/user/login',routeLogin)
+//middleware for register
 app.use('/api/user/register',routeSignup)
 //middleware for likes
 app.use('/comment',routeLikes)
@@ -55,13 +59,23 @@ app.use('/contact', routeContact)
 app.use('/blogs',routeblog)
 //middlewares for swagger documentation
 app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(specs))
-//connecting to database
+
 app.use(cors())
 app.use(morgan('dev'))
 app.use(cors());
+//solving problem of swagger https to http
 app.options('*', cors());
 app.enable('trust proxy');
-
+//including static files
+app.use(express.static('public'))
+app.use('/css',express.static(__dirname,+'public/css'))
+app.use('/img',express.static(__dirname,+'public/img'))
+app.use('/js',express.static(__dirname,+'public/js'))
+app.use('/docs',express.static(__dirname,+'public/docs'))
+//templating engine
+app.set('views','views')
+app.set('view engine', 'ejs')
+//connecting to database
 mongoose.connect(
     process.env.DATABASE_COLLECTION,{ useNewUrlParser: true },()=>
     console.log('connected to database')

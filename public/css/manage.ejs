@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.18.0/ckeditor.js" integrity="sha512-woYV6V3QV/oH8txWu19WqPPEtGu+dXM87N9YXP6ocsbCAH1Au9WDZ15cnk62n6/tVOmOo0rIYwx05raKdA4qyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Blogs and Articles</title>
+</head>
+<body>
+    <h1>Create a  blog</h1>
+    <input type="text" width="100px" placeholder="enter title of blog here">
+   <textarea name="content" id="" cols="10" rows="5">
+   </textarea>
+   <button>save post</button>
+   <button>cancel post</button>
+   
+   <script src="ckeditor/ckeditor.js"></script>
+   <script>
+       CKEDITOR.replace('content')
+   </script>
+</body>
+</html>
