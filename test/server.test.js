@@ -190,7 +190,7 @@ chai.request(server)
 });
 
 // same
-it('should register + login a user, create blog and delete it from DB',function(done){
+it('should register + login a user, create blog and update user ',function(done){
   this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -240,11 +240,11 @@ expect(savedBlogs.description).to.be.equal(blogs.description);
 expect(savedBlogs.img).to.be.equal(blogs.img);
 // 4) Delete product
 chai.request(server)
-    .delete('/blogs/' + savedBlogs._id)
+    .put('/blogs/' + savedBlogs._id)
     .set({ "auth-token": token })
     .end((err, res) => {
         // Asserts
-        expect(res.status).to.be.equal(200);                                               
+        expect(res.status).to.be.equal(201);                                               
         done();
     });
 });

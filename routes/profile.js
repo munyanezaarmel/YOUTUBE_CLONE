@@ -1,5 +1,6 @@
 const express=require('express')
-const Profiles= require('../models/PROFILE')
+const Profiles= require('../models/SIGNUP')
+const verify=require('./privateroutes')
 let routerProfile=express.Router()
 /**
  * @swagger
@@ -63,7 +64,7 @@ routerProfile.get('/', async (req, res)=>{
 })
 
 //post profile
-routerProfile.post('/', async(req, res)=>{
+routerProfile.post('/',async(req, res)=>{
     const profile=new Profiles({
         username: req.body.username,
         email: req.body.email,
@@ -82,6 +83,8 @@ routerProfile.post('/', async(req, res)=>{
  * /profile/{id}:
  *  put:
  *    summary: Update your profile
+ *    security:
+ *     - ApiKeyAuth: []
  *    tags: [Profiles]
  *    parameters:
  *      - in: path
@@ -109,7 +112,7 @@ routerProfile.post('/', async(req, res)=>{
  *        description: Some error happened
  */
 //updating a profile
-routerProfile.put('/:userId',async(req, res)=>{
+routerProfile.put('/:userId',verify,async(req, res)=>{
     try{
    const updated=await Profiles.updateOne(
     {_id:req.params.userId},{$set:{email:req.body.email}}
