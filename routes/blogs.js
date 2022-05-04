@@ -142,7 +142,7 @@ router.get('/:blogId',async(req, res) => {
    res.json(singleBlog)
     }
     catch (err) {
-        res.json(err);
+        res.status(404).json({err,message:"blog not found"});
     }
 })
 /**
