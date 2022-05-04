@@ -71,7 +71,6 @@ app.use('/blogs',routeblog)
 app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(specs))
 app.use(cors())
 app.use(morgan('dev'))
-app.use(cors());
 //solving problem of swagger https to http
 app.options('*', cors());
 app.enable('trust proxy');

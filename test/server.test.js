@@ -17,7 +17,6 @@ chai.request(server)
 .post('/api/user/register')
 .send(user)
 .end((err, res) => {
-  console.log(res,err);
 // Asserts
 expect(res.status).to.be.equal(200);   
 expect(res.body).to.be.a('object');
@@ -336,7 +335,6 @@ expect(res.body).to.be.a('object');
 let savedComment = res.body;
 expect(savedComment.like).to.be.equal(comment.like);
 expect(savedComment.comment).to.be.equal(comment.comment);
-console.log("ok",savedComment)
 // 4) Verify one product in test DB
 chai.request(server)
   .get('/comment')
