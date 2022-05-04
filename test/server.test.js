@@ -5,7 +5,7 @@
   const server = require('../server');
   chai.use(chaiHttp);
 describe('User workflow tests', () => {
-  it.skip('should register + login a user, create product and verify 1 in DB', function(done){
+  it('should register + login a user, create product and verify 1 in DB', function(done){
     this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -57,7 +57,6 @@ expect(savedBlogs.img).to.be.equal(blogs.img);
 chai.request(server)
     .get('/blogs')
     .end((err, res) => {
-      console.log(res.body);
         // Asserts
        expect(res.status).to.be.equal(200);                                
         expect(res.body).to.be.a('object');                                
@@ -67,7 +66,7 @@ chai.request(server)
   });
 });
 });
-  it.skip('check blog DB', function(done){
+  it('check blog DB', function(done){
     this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -90,7 +89,7 @@ chai.request(server)
 "email": "munyaarmel61@gmail.com",
 "password": "123456"
 })
-.end((err, res) => {
+.end((err, res) =>{
 // Asserts  
 expect(res.body).to.be.a('object');                      
 expect(res.status).to.be.equal(200);                       
@@ -119,7 +118,6 @@ expect(savedBlogs.img).to.be.equal(blogs.img);
 chai.request(server)
     .get('/blogs')
     .end((err, res) => {
-      console.log(res.body);
         // Asserts
        expect(res.status).to.be.equal(200);                                
         expect(res.body).to.be.a('object');                                
@@ -129,11 +127,11 @@ chai.request(server)
   });
 });
 });
-it.skip('should register + login a user, create blog and delete it from DB',function(done){
+it('should register + login a user, create blog and delete it from DB',function(done){
   this.timeout(30000);
 // 1) Register new user
 let user = {
-username: "armel",
+username: "armel70",
 email: "munyaarmel61@gmail.com",
 password: "123456"
 }
@@ -177,7 +175,69 @@ let savedBlogs = res.body;
 expect(savedBlogs.title).to.be.equal(blogs.title);
 expect(savedBlogs.description).to.be.equal(blogs.description);
 expect(savedBlogs.img).to.be.equal(blogs.img);
+// 4) Delete product
+chai.request(server)
+    .delete('/blogs/' + savedBlogs._id)
+    .set({ "auth-token": token })
+    .end((err, res) => {
+        // Asserts
+        expect(res.status).to.be.equal(200);                                               
+        done();
+    });
+});
+});
+});
+});
 
+// same
+it('should register + login a user, create blog and delete it from DB',function(done){
+  this.timeout(30000);
+// 1) Register new user
+let user = {
+username: "armel70",
+email: "munyaarmel61@gmail.com",
+password: "123456"
+}
+chai.request(server)
+.post('/api/user/register')
+.send(user)
+.end((err, res) => {
+// Asserts
+expect(res.status).to.be.equal(200);   
+expect(res.body).to.be.a('object');
+// 2) Login the user
+chai.request(server)
+.post('/api/user/login')
+.send({
+    "email": "munyaarmel61@gmail.com",
+    "password": "123456"
+})
+.end((err, res) => {
+    // Asserts                        
+    expect(res.status).to.be.equal(200);                                                
+    let token = res.body.token;
+    // 3) Create new product
+   let blogs =
+    {
+        title: "blog title",
+        description: "Test blogs Description",
+        img: 'image title'
+   };
+
+    chai.request(server)
+.post('/blogs')
+.set({ "auth-token": token })
+.send(blogs)
+.end((err, res) => {
+
+// Asserts
+expect(res.status).to.be.equal(201);                                
+expect(res.body).to.be.a('object');
+
+let savedBlogs = res.body;
+expect(savedBlogs.title).to.be.equal(blogs.title);
+expect(savedBlogs.description).to.be.equal(blogs.description);
+expect(savedBlogs.img).to.be.equal(blogs.img);
 // 4) Delete product
 chai.request(server)
     .delete('/blogs/' + savedBlogs._id)
@@ -230,7 +290,7 @@ expect(res.body).to.be.a('object');
 done();              
 });
 });
-it.skip('should register + login a user, create product and cotntact', function(done){
+it('should register + login a user, create product and comment on blog', function(done){
   this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -254,6 +314,7 @@ chai.request(server)
 "password": "123456"
 })
 .end((err, res) => {
+  
 // Asserts  
 expect(res.body).to.be.a('object');                      
 expect(res.status).to.be.equal(200);                       
@@ -270,11 +331,11 @@ chai.request(server)
 .send(comment)
 .end((err, res) => {
 // Asserts                              
-expect(res.body).to.be.a('array');
-let savedBlogs = res.body;
-expect(savedBlogs.like).to.be.equal(comment.like);
-expect(savedBlogs.comment).to.be.equal(comment.comment);
-
+expect(res.body).to.be.a('object');
+let savedComment = res.body;
+expect(savedComment.like).to.be.equal(comment.like);
+expect(savedComment.comment).to.be.equal(comment.comment);
+console.log("ok",savedComment)
 // 4) Verify one product in test DB
 chai.request(server)
   .get('/comment')

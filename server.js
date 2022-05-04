@@ -4,13 +4,15 @@ const morgan=require('morgan')
 const swaggerUI=require('swagger-ui-express')
 const swaggerJsDoc=require('swagger-jsdoc')
 const yaml=require('yamljs')
+const passport=require('passport')
+const session=require('express-session')
 const options={
     definition:{
         openapi:"3.0.0",
         info:{
             title:"My Brand API",
             version:"1.0.0",
-            description:" my personal portfolio api access it by clicking on this link https://github.com/munyanezaarmel/my-brand-api.git"
+            description:  'check the deployed website at [https://github.com/munyanezaarmel/mi-brand-backend](https://github.com/munyanezaarmel/mi-brand-backend) ',
         },
         server: [{
             url:`${
@@ -21,8 +23,7 @@ const options={
           }]
     },
     apis:["./routes/*.js"]
-}
-
+}   
 const specs=swaggerJsDoc(options)
 let app= express()
 const mongoose=require('mongoose')
@@ -31,6 +32,8 @@ const bodyParser= require('body-parser')
 app.use(bodyParser.json())
 //importing routes of homepage 
 let routehome=require('./routes/home')
+//importing routes of portfolio
+let routeportfolio=require('./routes/portfolio')
 //importing routes of blogs
 let routeblog=require('./routes/blogs')
 //importing routes of contact
@@ -44,7 +47,14 @@ let routeSignup=require('./routes/signup')
 //importing routes for login
 let routeLogin=require('./routes/login')
 //middleware for home page
+//importing route login with googgle
+let routeGoogle=require('./routes/google')
+require('./config/pass')(passport)
+
 app.use('/',routehome)
+app.use('/auth',routeGoogle)
+//middleware for portfolio
+app.use('/portfolio',routeportfolio)
 //middleware for login 
 app.use('/api/user/login',routeLogin)
 //middleware for register
@@ -59,7 +69,6 @@ app.use('/contact', routeContact)
 app.use('/blogs',routeblog)
 //middlewares for swagger documentation
 app.use("/api-docs",swaggerUI.serve,swaggerUI.setup(specs))
-
 app.use(cors())
 app.use(morgan('dev'))
 app.use(cors());
@@ -72,9 +81,18 @@ app.use('/css',express.static(__dirname,+'public/css'))
 app.use('/img',express.static(__dirname,+'public/img'))
 app.use('/js',express.static(__dirname,+'public/js'))
 app.use('/docs',express.static(__dirname,+'public/docs'))
+
+//sessions
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized:false
+  }))
 //templating engine
 app.set('views','views')
 app.set('view engine', 'ejs')
+app.use(passport.initialize())
+app.use(passport.session())
 //connecting to database
 mongoose.connect(
     process.env.DATABASE_COLLECTION,{ useNewUrlParser: true },()=>

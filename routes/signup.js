@@ -82,7 +82,6 @@ route.post('/', async (req, res)=>{
   })
   try{
   let savedUser=await signup.save()
-  console.log('ok')
  res.status(200).json({user:signup._id,message:'user created'})
   }
   catch(err){

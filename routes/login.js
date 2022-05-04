@@ -77,7 +77,7 @@ route.post('/', async (req, res)=>{
      })
      try{
   const savedLogin= await login.save()
-  console.log('login')
+
   res.header('auth-token',token).status(200).json({savedLogin,token})
      }
      catch(err){
