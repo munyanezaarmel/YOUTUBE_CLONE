@@ -17,6 +17,7 @@ chai.request(server)
 .post('/api/user/register')
 .send(user)
 .end((err, res) => {
+  console.log(res,err);
 // Asserts
 expect(res.status).to.be.equal(200);   
 expect(res.body).to.be.a('object');
