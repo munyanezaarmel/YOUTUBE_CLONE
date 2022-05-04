@@ -106,7 +106,7 @@ chai.request(server)
 .set({ "auth-token": token })
 .send(blogs)
 .end((err, res) => {
-// Asserts
+
 expect(res.status).to.be.equal(201);                                
 expect(res.body).to.be.a('object');
 let savedBlogs = res.body;
@@ -114,7 +114,7 @@ expect(savedBlogs.title).to.be.equal(blogs.title);
 expect(savedBlogs.description).to.be.equal(blogs.description);
 expect(savedBlogs.img).to.be.equal(blogs.img);
 
-// 4) Verify one product in test DB
+
 chai.request(server)
     .get('/blogs')
     .end((err, res) => {
