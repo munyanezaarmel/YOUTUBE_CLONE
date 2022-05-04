@@ -5,7 +5,7 @@
   const server = require('../server');
   chai.use(chaiHttp);
 describe('User workflow tests', () => {
-  it.skip('should register + login a user, create product and verify 1 in DB', function(done){
+  it('should register + login a user, create product and verify 1 in DB', function(done){
     this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -66,7 +66,7 @@ chai.request(server)
   });
 });
 });
-  it.skip('check blog DB', function(done){
+  it('check blog DB', function(done){
     this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -125,7 +125,7 @@ chai.request(server)
   });
 });
 });
-it.skip('should register + login a user, create blog and delete it from DB',function(done){
+it('should register + login a user, create blog and delete it from DB',function(done){
   this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -188,7 +188,7 @@ chai.request(server)
 });
 
 // same
-it.skip('should register + login a user, create blog and update user ',function(done){
+it('should register + login a user, create blog and update user ',function(done){
   this.timeout(30000);
 // 1) Register new user
 let user = {
@@ -288,7 +288,7 @@ expect(res.body).to.be.a('object');
 done();              
 });
 });
-it.skip('should register + login a user, create product and comment on blog', function(done){
+it('should register + login a user, create product and comment on blog', function(done){
   this.timeout(30000);
 // 1) Register new user
 let user = {
